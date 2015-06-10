@@ -1,9 +1,45 @@
+{- 
+
+(==) :: (Eq a) => a -> a -> Bool
+Everything before the => symbol is called a class constraint. We can read the previous type declaration 
+like this: the equality function takes any two values that are of the same type and returns a Bool. 
+The type of those two values must be a member of the Eq class (this was the class constraint).
+
+
+Listas por comprension:
+
+ghci> let xs = [(1,3), (4,3), (2,4), (5,3), (5,6), (3,1)]  
+ghci> [a+b | (a,b) <- xs]  
+
+he x:xs pattern is used a lot, especially with recursive functions. But patterns that have : in them only match against lists of length 1 or more.
+
+**GUARDAS**   --SON COMO EL CASE?
+
+max' :: (Ord a) => a -> a -> a  
+max' a b   
+    | a > b     = a  
+    | otherwise = b  
+
+
+**BINDINGS**
+
+cylinder :: (RealFloat a) => a -> a -> a  
+cylinder r h = 
+    let sideArea = 2 * pi * r * h  
+        topArea = pi * r ^2  
+    in  sideArea + 2 * topArea  
+	
+**DATA TYPE**
+
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+	
+-}
+
+
+
 --practica1
 
 doubleMe x = x + x
-signo :: Integer -> Int
-signo 0 = 0
-signo x = if x>0 then 1 else -1
 
 --import Text.Regex.Posix ((=~))
 
@@ -38,15 +74,32 @@ fibonacci 0 = 1
 fibonacci 1 = 1
 fibonacci x =  fibonacci (x-1) + fibonacci (x-2)
 
---divisiblePor :: Int -> Int -> Bool
 
-div2 :: (Integral a, Fractional a) => a -> a -> a
-div2 x y = x `div` y
+divisiblePor :: Integral a => a -> a -> Bool			
+divisiblePor x y 
+	| x `div` y == 0 = True
+	| x `div` y == 1 = False
 
-divisiblePor :: (Ord a) => a -> a -> Bool			--como extender los tipos que acepta una funcion?
-divisiblePor x y = (x `div` y) < (x / y)
+--div :: Integral a => a -> a -> a
+
+--instance Num -> Integer where 
+--como extender los tipos que acepta una funcion? Con instance?
+
 
 --practica2
+
+data Cero a = Vacio
+data Nat = Nat Cero
+
+---que diferencia hay si hacia esto?
+data Cero a = Vacio
+data Nat = Nat(Cero)
+
+nat2Int::Nat->Int
+nat2Int Cero = 0
+nat2Int Nat = 1 + nat2Int xs
+
+
 
 data Poste = Src | Dst | Aux deriving (Show)
 data Movimiento = Mov (Poste,Poste) deriving (Show)
@@ -62,14 +115,14 @@ cabeza [] = Undef
 cabeza (x:xs) = Solo x
 
 data Factor = Negativo | Positivo deriving (Eq)
-data TipoDeSangre =  TipoSangre String Factor deriving (Eq)
-
---instance Eq -> TipoDeSangre where
---(TipoSangre String a b)==(TipoSangre String c d) = (a==c) && (b==d) 
+data TipoDeSangre =  TipoSangre Char Factor deriving (Eq)
 
 puedeDonar::TipoDeSangre->TipoDeSangre->Bool
-puedeDonar  (TipoSangre (String x) _) (TipoSangre (String y) _) = (x==y)
-puedeDonar (TipoSangre "O" _) (TipoSangre z m) = True
+puedeDonar (TipoSangre x y) (TipoSangre z w) 
+	| (x==z)  && (y==w) = True
+	| (x == 'O') = True
+	| otherwise = False
+
 
 
 
