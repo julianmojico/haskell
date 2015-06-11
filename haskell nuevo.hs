@@ -1,5 +1,11 @@
 {- 
 
+--instance Clase a where
+funcion1 = 
+funcion2 = 
+....
+
+
 (==) :: (Eq a) => a -> a -> Bool
 Everything before the => symbol is called a class constraint. We can read the previous type declaration 
 like this: the equality function takes any two values that are of the same type and returns a Bool. 
@@ -58,7 +64,6 @@ max3 x y z = Main.max (Main.max x y) z	  --hay alguna manera mejor de escribirlo
 
 minim x y = if Main.max x y == x then y else x 
 
--- factorial x = if x==0 then 1 else x*factorial x-1 --entro en loop infinito y me tiro out of memory
 
 
 factorial x = if x==0 then 1 else factorial (x-1)*x
@@ -82,23 +87,19 @@ divisiblePor x y
 
 --div :: Integral a => a -> a -> a
 
---instance Num -> Integer where 
---como extender los tipos que acepta una funcion? Con instance?
+
+--como extender los tipos que acepta una funcion? Haciendo funcion::(Tipo1,Tipo2)->a
+-- ...pero sin redefinir la funcion??
 
 
 --practica2
 
-data Cero a = Vacio
-data Nat = Nat Cero
-
----que diferencia hay si hacia esto?
-data Cero a = Vacio
-data Nat = Nat(Cero)
+data Nat = Cero | Sig Nat deriving (Eq)
 
 nat2Int::Nat->Int
-nat2Int Cero = 0
-nat2Int Nat = 1 + nat2Int xs
-
+nat2Int x
+	|x==Cero = 0
+	|otherwise = 1 + nat2Int x
 
 
 data Poste = Src | Dst | Aux deriving (Show)
@@ -122,6 +123,13 @@ puedeDonar (TipoSangre x y) (TipoSangre z w)
 	| (x==z)  && (y==w) = True
 	| (x == 'O') = True
 	| otherwise = False
+
+
+data ListOrd a = ListOrd [a]
+
+addListOrd::a->ListOrd a->ListOrd a
+addListOrd x ListOrd (w:y:ys) 
+	| x < w = ListOrd (x:w:y:ys)
 
 
 
