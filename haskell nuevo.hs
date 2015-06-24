@@ -125,15 +125,12 @@ puedeDonar (TipoSangre x y) (TipoSangre z w)
 	| otherwise = False
 
 
+
+{- ejemplos para TP
 data ListOrd a = ListOrd [a]
 
 addListOrd::a->ListOrd a->ListOrd a
 addListOrd x ListOrd (w:y:ys) 
 	| x < w = ListOrd (x:w:y:ys)
 
-
-
-
-
- 
-
+-}
