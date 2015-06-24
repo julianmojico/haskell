@@ -133,4 +133,6 @@ addListOrd::a->ListOrd a->ListOrd a
 addListOrd x ListOrd (w:y:ys) 
 	| x < w = ListOrd (x:w:y:ys)
 
+
+let <bindings> in <expression>
 -}
